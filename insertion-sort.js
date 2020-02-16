@@ -4,7 +4,7 @@ const insertionSort = (array) => {
     insert(array, i, array[i]);
   }
   var t1 = performance.now();
-  console.log(`Array of n = ${array.length} elements: time ${t1 - t0}! ${array}`);
+  console.log(`Array of n = ${array.length} elements: time ${t1 - t0}!`);
 }
 
 const insert = (array, position, value) => {
@@ -15,5 +15,8 @@ const insert = (array, position, value) => {
   }
   array[i + 1] = value;
 }
-insertionSort([8, 5, 10, 9]);
-insertionSort([10, 9, 8, 5, 10, 9, 8, 5]);
+
+insertionSort(generateRandomArray(10));
+insertionSort(generateRandomArray(100));
+insertionSort(generateRandomArray(1000));
+insertionSort(generateRandomArray(10000));
