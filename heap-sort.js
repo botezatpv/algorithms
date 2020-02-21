@@ -1,39 +1,46 @@
 const heapSort = (array) => {
   var t0 = performance.now();
-  for (let i = 0; i < (array.length) / 2; i++) {
-    heapify(array, i, i * 2);
+  buildHeap(array);
+  for (let i = array.length - 1; i >= 1; i--) {
+    let tmp = array[0];
+    array[0] = array[i];
+    array[i] = tmp;
+    heapify(array, 0, i);
   }
   var t1 = performance.now();
   algorithmTimes['heapSort'] = {...algorithmTimes['heapSort'], [array.length]: t1 - t0};
-  console.log('final array:', array);
 };
 
-const heapify = (array, startPoint) => {
+const buildHeap = (array) => {
+  for (let i = (array.length / 2) - 1; i >= 0; i--) {
+    heapify(array, i, array.length);
+  }
+}
+
+const heapify = (array, startPoint, max) => {
   let largest = startPoint;
   const left = 2*startPoint + 1;
   const right = 2*startPoint + 2;
-  const max = array.length;
-  console.log(`${array[left]}-${array[startPoint]}-${array[right]}`);
-  if (largest < max) {
-    if (array[largest] < array[right]) {
-      largest = right;
-    } else if (array[largest] < array[left]) {
-      largest = left;
-    }
+  // console.log(`${array[left]}-${array[startPoint]}-${array[right]}`);
   
-    if (largest != array[startPoint]) {
-      const startPointValue = array[startPoint];
-      array[startPoint] = array[largest];
-      array[largest] = startPointValue;
-      // heapify(array, largest);
-    }
+  if (right < max && array[largest] < array[right]) {
+    largest = right;
+  } 
+  
+  if (left < max && array[largest] < array[left]) {
+    largest = left;
   }
-
+    
+  if (largest != startPoint) {
+    const startPointValue = array[startPoint];
+    array[startPoint] = array[largest];
+    array[largest] = startPointValue;
+    heapify(array, largest, max);
+  }
 };
 
 
-heapSort([8, 11, 09, 02, 10, 16, 18, 22, 13, 31, 44, 56])
-// heapSort(arr10);
-// heapSort(arr100);
-// heapSort(arr1000);
-// heapSort(arr10000);
+heapSort(arr10);
+heapSort(arr100);
+heapSort(arr1000);
+heapSort(arr10000);
